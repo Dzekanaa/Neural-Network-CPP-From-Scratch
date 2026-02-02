@@ -37,7 +37,7 @@ public:
 
     double getOutput() const { return output; }
     void setOutput(double val) { output = val; }
-    const std::vector<double> &getWeights() const { return weights; }
+    const std::vector<double> &getWeights() const { return weights; } // razresi
     void setWeights(const std::vector<double> &vals) { weights = vals; }
     double getBias() const { return bias; }
     void setBias(double val) { bias = val; }

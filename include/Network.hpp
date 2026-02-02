@@ -13,10 +13,13 @@ private:
     std::vector<int> layerSizes; // Number of neurons in each layer
     double learningRate;
 
+    Activation activation; // Activation function for the network
+
 public:
     /**
      * @brief Constructs a Network with specified layer sizes and learning rate.
      * @param layerSizes A vector containing the number of neurons in each layer.
+     * @param activation The activation function to be used in the network.
      * @param learningRate The learning rate for training the network.
      *
      * @example
@@ -25,7 +28,7 @@ public:
      * // - Hidden layer with 5 neurons
      * // - Output layer with 2 neurons
      */
-    Network(const std::vector<int> &layerSizes, double learningRate = 0.1);
+    Network(const std::vector<int> &layerSizes, const Activation &activation = Activations::sigmoid(), double learningRate = 0.1);
     ~Network() {}
 
     /**
@@ -54,10 +57,11 @@ public:
      * @param trainingInputs A vector of input vectors for training.
      * @param trainingOutputs A vector of expected output vectors for training.
      * @param epochs The number of training epochs.
+     * @param verbose If true, prints progress during training.
      */
     void fit(const std::vector<std::vector<double>> &trainingInputs,
              const std::vector<std::vector<double>> &trainingOutputs,
-             int epochs);
+             int epochs, bool verbose = true);
 
     /**
      * @brief Makes a prediction using the trained network.
@@ -66,7 +70,17 @@ public:
      */
     std::vector<double> predict(const std::vector<double> &input);
 
+    /**
+     * @brief Calculates the loss between predicted and actual outputs using Mean Squared Error.
+     * @param predicted A vector of predicted output vectors.
+     * @param actual A vector of actual output vectors.
+     * @return The calculated loss value.
+     */
+    double calculateLoss(const std::vector<std::vector<double>> &predicted, const std::vector<std::vector<double>> &actual);
+
     // Getters
     std::vector<Layer> &getLayers() { return layers; }
     const std::vector<int> &getLayerSizes() const { return layerSizes; }
+    void setActivation(const Activation &act) { activation = act; }
+    std::string getActivationName() const { return activation.name; }
 };
