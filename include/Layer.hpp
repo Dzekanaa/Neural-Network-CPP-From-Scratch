@@ -10,8 +10,6 @@ class Layer
 {
 private:
     std::vector<Neuron> neurons;
-    int numNeurons;
-    int numInputsPerNeuron;
 
 public:
     Layer(int numNeurons, int numInputsPerNeuron);
@@ -20,9 +18,10 @@ public:
     /**
      * @brief Performs a forward pass through the layer.
      * @param inputs A vector of input values to the layer.
+     * @param activationFunction The activation function to apply to each neuron.
      * @return A vector containing the outputs of the layer's neurons.
      */
-    std::vector<double> forward(const std::vector<double> &inputs);
+    std::vector<double> forward(const std::vector<double> &inputs, const ActivationFunc &activationFunction);
 
     /**
      * @brief Retrieves the outputs of all neurons in the layer.
@@ -33,5 +32,5 @@ public:
     // Getters
     std::vector<Neuron> &getNeurons() { return neurons; }
     const std::vector<Neuron> &getNeurons() const { return neurons; }
-    int getNumNeurons() const { return numNeurons; }
+    int size() const { return neurons.size(); }
 };
