@@ -12,8 +12,15 @@ private:
     double output;
 
 public:
+    /**
+     * @brief Constructs a Neuron with a specified number of weights.
+     * @param numWeights The number of weights for the neuron.
+     */
     Neuron(int numWeights);
 
+    /**
+     * @brief Initializes the weights of the neuron with random values.
+     */
     void initializeWeights();
     ~Neuron() {}
 
