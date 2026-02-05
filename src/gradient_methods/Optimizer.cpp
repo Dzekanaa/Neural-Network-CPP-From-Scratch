@@ -1,7 +1,6 @@
 #include "Optimizer.hpp"
 
-Optimizer::Optimizer(double lr) : learning_rate(lr) {
-}
+Optimizer::Optimizer(double lr) : learning_rate(lr) {}
 
 void Optimizer::set_learning_rate(double lr) {
     learning_rate = lr;

@@ -14,6 +14,7 @@
  * - AdaGrad (adaptive learning rates)
  * - Adam (adaptive moment estimation)
  * - RMSProp (root mean square propagation)
+ * @author Jokula1
  */
 class Optimizer {
 protected:
@@ -26,14 +27,10 @@ public:
      */
     explicit Optimizer(double lr);
     
-    /**
-     * Virtual destructor for proper cleanup of derived classes
-     */
     virtual ~Optimizer() = default;
     
     /**
-     * Update weights and biases using the computed gradients
-     * This is the core method that each optimizer must implement.
+     * @brief Update weights and biases using the computed gradients
      * 
      * @param weights Network weights - MODIFIED (pass by reference)
      * @param biases Network biases - MODIFIED (pass by reference)
