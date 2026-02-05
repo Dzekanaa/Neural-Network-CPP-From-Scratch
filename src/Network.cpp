@@ -28,16 +28,14 @@ std::vector<double> Network::forward(const std::vector<double> &inputs)
     return currentInputs;
 }
 
-void Network::train(const std::vector<double> &inputs, const std::vector<double> &targets)
+void Network::backward(const std::vector<double>& expectedOutputs)
 {
-    // Forward pass
-    forward(inputs);
-
     // Output layer deltas
-    Layer &outputLayer = layers.back();
+    Layer& outputLayer = layers.back();
+
     for (size_t i = 0; i < outputLayer.getNeurons().size(); ++i)
     {
-        Neuron &neuron = outputLayer.getNeurons()[i];
+        Neuron& neuron = outputLayer.getNeurons()[i];
         double output = neuron.getOutput();
         double error = targets[i] - output;
         neuron.setDelta(error * activation.derivative(output));
@@ -46,15 +44,15 @@ void Network::train(const std::vector<double> &inputs, const std::vector<double>
     // Hidden layer deltas (backpropagate)
     for (int l = layers.size() - 2; l >= 0; --l)
     {
-        Layer &currentLayer = layers[l];
-        Layer &nextLayer = layers[l + 1];
+        Layer& currentLayer = layers[l];
+        Layer& nextLayer = layers[l + 1];
 
         for (size_t i = 0; i < currentLayer.getNeurons().size(); ++i)
         {
-            Neuron &neuron = currentLayer.getNeurons()[i];
+            Neuron& neuron = currentLayer.getNeurons()[i];
             double error = 0.0;
 
-            for (auto &nextNeuron : nextLayer.getNeurons())
+            for (auto& nextNeuron : nextLayer.getNeurons())
             {
                 error += nextNeuron.getWeights()[i] * nextNeuron.getDelta();
             }
@@ -68,9 +66,9 @@ void Network::train(const std::vector<double> &inputs, const std::vector<double>
 
     for (size_t l = 0; l < layers.size(); ++l)
     {
-        Layer &layer = layers[l];
+        Layer& layer = layers[l];
 
-        for (auto &neuron : layer.getNeurons())
+        for (auto& neuron : layer.getNeurons())
         {
             std::vector<double> weights = neuron.getWeights();
 
@@ -78,11 +76,19 @@ void Network::train(const std::vector<double> &inputs, const std::vector<double>
             {
                 weights[w] += learningRate * neuron.getDelta() * prevOutputs[w];
             }
-            neuron.setBias(neuron.getBias() + learningRate * neuron.getDelta());
+
+            neuron.setWeights(weights)
+                neuron.setBias(neuron.getBias() + learningRate * neuron.getDelta());
         }
 
         prevOutputs = layer.getOutputs();
     }
+}
+
+void Network::train(const std::vector<double> &inputs, const std::vector<double> &targets)
+{
+    forward(inputs);
+    backwards(inputs, targets);
 }
 
 void Network::fit(const std::vector<std::vector<double>> &inputData,
