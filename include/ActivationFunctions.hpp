@@ -1,4 +1,5 @@
 #pragma once
+#include "../utils/Constants.hpp"
 #include <cmath>
 #include <functional>
 #include <string>
@@ -140,12 +141,12 @@ namespace Activations
         return {
             [](double x)
             {
-                const double c = std::sqrt(2.0 / M_PI);
+                const double c = std::sqrt(2.0 / utils::M_PI);
                 return 0.5 * x * (1.0 + std::tanh(c * (x + 0.044715 * x * x * x)));
             },
             [](double x)
             {
-                const double c = std::sqrt(2.0 / M_PI);
+                const double c = std::sqrt(2.0 / utils::M_PI);
                 double inner = c * (x + 0.044715 * x * x * x);
                 double tanhInner = std::tanh(inner);
                 double sech2 = 1.0 - tanhInner * tanhInner;
