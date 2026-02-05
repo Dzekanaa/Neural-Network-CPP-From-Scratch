@@ -42,7 +42,7 @@ public:
      * @brief Performs a backward pass through the network to update weights.
      * @param expectedOutputs A vector of expected output values for training.
      */
-    void backward(const std::vector<double> &expectedOutputs);
+    void backward(const std::vector<double> &inputs, const std::vector<double> &targets);
 
     /**
      * @brief Trains the network on a single input-output pair.
