@@ -11,11 +11,6 @@ Network::Network(const std::vector<int> &layerSizes, const Activation &activatio
     }
 }
 
-void Network::setActivation(const Activation &newActivation)
-{
-    activation = newActivation;
-}
-
 std::vector<double> Network::forward(const std::vector<double> &inputs)
 {
     std::vector<double> currentInputs = inputs;
@@ -28,7 +23,7 @@ std::vector<double> Network::forward(const std::vector<double> &inputs)
     return currentInputs;
 }
 
-void Network::backward(const std::vector<double>& expectedOutputs)
+void Network::backward(const std::vector<double> &inputs, const std::vector<double> &targets)
 {
     // Output layer deltas
     Layer& outputLayer = layers.back();
@@ -77,8 +72,8 @@ void Network::backward(const std::vector<double>& expectedOutputs)
                 weights[w] += learningRate * neuron.getDelta() * prevOutputs[w];
             }
 
-            neuron.setWeights(weights)
-                neuron.setBias(neuron.getBias() + learningRate * neuron.getDelta());
+            neuron.setWeights(weights);
+            neuron.setBias(neuron.getBias() + learningRate * neuron.getDelta());
         }
 
         prevOutputs = layer.getOutputs();
@@ -88,7 +83,7 @@ void Network::backward(const std::vector<double>& expectedOutputs)
 void Network::train(const std::vector<double> &inputs, const std::vector<double> &targets)
 {
     forward(inputs);
-    backwards(inputs, targets);
+    backward(inputs, targets);
 }
 
 void Network::fit(const std::vector<std::vector<double>> &inputData,
