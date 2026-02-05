@@ -9,37 +9,23 @@
  * It updates parameters by moving in the direction opposite to the gradient.
  * 
  * Update rule:
- *   w_new = w_old - learning_rate * ∂L/∂w
- *   b_new = b_old - learning_rate * ∂L/∂b
+ *   w_new = w_old - learning_rate * dL/dw
+ *   b_new = b_old - learning_rate * dL/db
  * 
- * Where:
- *   - w are the weights
- *   - b are the biases
- *   - ∂L/∂w and ∂L/∂b are the gradients (partial derivatives of loss)
- *   - learning_rate controls the step size
- * 
- * Advantages:
- *   - Simple and easy to understand
- *   - No additional memory required
- *   - Works well for convex problems
- * 
- * Disadvantages:
- *   - Can be slow to converge
- *   - Sensitive to learning rate choice
- *   - Can get stuck in local minima
- *   - Same learning rate for all parameters
+ *   w - weights
+ *   b - biases
+ *   dL/dw and dL/db    - gradients (partial derivatives of loss)
+ *   learning_rate      - controls the step size
+
  */
 class SteepestDescent : public Optimizer {
 public:
     /**
      * Constructor
-     * @param lr Learning rate (typical values: 0.001 to 0.1)
+     * @param lr Learning rate [0.001, 0.1]
      */
     explicit SteepestDescent(double lr = 0.01);
     
-    /**
-     * Destructor
-     */
     ~SteepestDescent() override = default;
     
     /**
